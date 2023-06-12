@@ -5,36 +5,21 @@ import ReactPlayer from "react-player";
 import { apiKey } from "../../config";
 
 export function MediaCards(props) {
-  const { title, fetchUrl, mediaType } = props;
+  const { title, media, mediaType } = props;
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
   const [trailerKey, setTrailerKey] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
 
-  const fetchContent = async () => {
-    const url = fetchUrl;
-
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    if (data.results) {
-      setLoading(false);
-      console.log("data.results", data.results);
-      setContent(data.results);
-    } else {
-      console.log("error");
-    }
-  };
-
-  useEffect(() => {
-    fetchContent();
-  }, []);
-
   const handleCloseModal = () => {
     setSelectedMedia(null);
     setShowTrailer(false);
   };
+
+  useEffect(() => {
+    setContent(media);
+  }, [media]);
 
   useEffect(() => {
     const fetchTrailer = async () => {
@@ -60,16 +45,16 @@ export function MediaCards(props) {
 
   // ...
   return (
-    <div className="flex flex-col  bg-black  w-[65%]">
+    <div className="flex flex-col items-center bg-black  w-[100%]">
       <div className="flex justify-start">
         <h1 className="text-white text-2xl font-bold mb-8">{title}</h1>
       </div>
-      <div className="flex  px-3 items-start gap-10 w-full overflow-x-scroll mb-7">
+      <div className="flex w-[68%] px-3 items-start gap-10  flex-wrap mb-7">
         {content.map((media) => (
-          <div className="flex flex-col">
+          <div className="flex flex-col w-52">
             <div
               key={media.id}
-              className="h-80 w-52 bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group"
+              className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
                 backgroundSize: "cover",
