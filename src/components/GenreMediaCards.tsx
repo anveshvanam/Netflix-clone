@@ -43,18 +43,17 @@ export function MediaCards(props) {
     fetchTrailer();
   }, [selectedMedia]);
 
-  // ...
   return (
     <div className="flex flex-col items-center bg-black  w-[100%]">
       <div className="flex justify-start">
         <h1 className="text-white text-2xl font-bold mb-8">{title}</h1>
       </div>
-      <div className="flex w-[68%] px-3 items-start gap-10  flex-wrap mb-7">
+      <div className="flex w-[68%] px-3 items-start justify-center  gap-10  flex-wrap mb-7">
         {content.map((media) => (
-          <div className="flex flex-col w-52">
+          <div className="flex flex-col w-52  h-[27rem]">
             <div
               key={media.id}
-              className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group"
+              className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px]  border-neutral-400"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
                 backgroundSize: "cover",

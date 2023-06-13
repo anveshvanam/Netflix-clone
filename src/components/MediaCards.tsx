@@ -69,7 +69,7 @@ export function MediaCards(props) {
           <div className="flex flex-col">
             <div
               key={media.id}
-              className="h-80 w-52 bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group"
+              className="h-80 w-52 bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px] border-neutral-400"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
                 backgroundSize: "cover",

@@ -17,3 +17,5 @@ export const movies = `https://api.themoviedb.org/3/discover/movie?api_key=${api
 export const tvshow = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&page=`;
 
 export const movieGenre = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
+
+export const tvGenre = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=en-US`;

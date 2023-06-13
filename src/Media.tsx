@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { movieGenre, apiKey } from "../config";
+import { movieGenre, apiKey, tvGenre } from "../config";
 import cancel from "./assets/cancel.png";
 import GenreMediaCards from "./components/GenreMediaCards";
 
@@ -19,12 +19,21 @@ export function Media({ mediaType }) {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const handlePrevPage = () => {
     setPageNo((prevPageNo) => prevPageNo - 1);
+    scrollToTop();
   };
 
   const handleNextPage = () => {
     setPageNo((prevPageNo) => prevPageNo + 1);
+    scrollToTop();
   };
 
   useEffect(() => {
@@ -34,8 +43,8 @@ export function Media({ mediaType }) {
           mediaType === "movie" ? movieGenre : tvGenre
         );
         const data = await response.json();
+        console.log("data", data);
         setMediaGenres(data.genres);
-        setTotalPages(data.total_pages);
       } catch (error) {
         console.error(`Error fetching ${mediaType} genres:`, error);
       }
@@ -44,18 +53,36 @@ export function Media({ mediaType }) {
   }, [mediaType]);
 
   useEffect(() => {
+    const sortedMediaGenres = [...mediaGenres];
+    sortedMediaGenres.sort((a, b) => {
+      const isSelectedA = selectedGenres.includes(a.id);
+      const isSelectedB = selectedGenres.includes(b.id);
+
+      if (isSelectedA && !isSelectedB) {
+        return -1;
+      } else if (!isSelectedA && isSelectedB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    setMediaGenres(sortedMediaGenres);
+  }, [selectedGenres]);
+
+  useEffect(() => {
     const fetchMedia = async () => {
       try {
         const genreIds = selectedGenres.join(",");
         const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNo}&with_genres=${genreIds}`;
         const response = await fetch(url);
         const data = await response.json();
+        setTotalPages(data.total_pages);
         setFetchedMedia(data.results);
       } catch (error) {
         console.error(`Error fetching ${mediaType}:`, error);
       }
     };
-
+    console.log("totalPages", totalPages);
     fetchMedia();
   }, [selectedGenres, pageNo, mediaType]);
 
@@ -110,7 +137,9 @@ export function Media({ mediaType }) {
           >
             Prev
           </button>
-          <span className="text-white">Page {pageNo}</span>
+          <span className="text-white">
+            Page {pageNo} of {totalPages}
+          </span>
           <button
             className="px-4 py-2 ml-2 bg-blue-600 text-white rounded"
             onClick={handleNextPage}

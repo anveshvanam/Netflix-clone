@@ -10,9 +10,7 @@ import {
 
 export function Home() {
   const [randomMovie, setRandomMovie] = useState(null);
-  /**
-   * add loading state
-   */
+
   const [loading, setLoading] = useState(true);
 
   const fetchTrendingMovies = async () => {
