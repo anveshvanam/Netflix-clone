@@ -22,7 +22,7 @@ export interface MediaCardsProps {
 
 export function GenreMediaCards(props: MediaCardsProps) {
   const { title, media, mediaType } = props;
-  const [content, setContent] = useState<Media[]>([]);
+  const [content, setContent] = useState<Media[] | undefined>([]);
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
@@ -38,23 +38,25 @@ export function GenreMediaCards(props: MediaCardsProps) {
 
   useEffect(() => {
     const fetchTrailer = async () => {
-      const trailers = await fetch(
-        `https://api.themoviedb.org/3/${mediaType}/${selectedMedia.id}/videos?api_key=${apiKey}&language=en-US`
-      );
-      const data = await trailers.json();
-      console.log(data);
-      if (data.results) {
-        const trailer = data.results.filter(
-          (item: any) => item.type === "Trailer"
+      if (selectedMedia) {
+        const trailers = await fetch(
+          `https://api.themoviedb.org/3/${mediaType}/${selectedMedia.id}/videos?api_key=${apiKey}&language=en-US`
         );
-        if (trailer.length > 0) {
-          console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
-          setTrailerKey(trailer[0].key);
+        const data = await trailers.json();
+        console.log(data);
+        if (data.results) {
+          const trailer = data.results.filter(
+            (item: any) => item.type === "Trailer"
+          );
+          if (trailer.length > 0) {
+            console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
+            setTrailerKey(trailer[0].key);
+          } else {
+            console.log("No trailer found.");
+          }
         } else {
-          console.log("No trailer found.");
+          console.log("error");
         }
-      } else {
-        console.log("error");
       }
     };
     fetchTrailer();
@@ -66,30 +68,31 @@ export function GenreMediaCards(props: MediaCardsProps) {
         <h1 className="text-white text-2xl font-bold mb-8">{title}</h1>
       </div>
       <div className="flex w-[68%] px-3 items-start justify-center  gap-10  flex-wrap mb-7">
-        {content.map((media) => (
-          <div className="flex flex-col w-52  h-[27rem]">
-            <div
-              key={media.id}
-              className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px]  border-neutral-400"
-              style={{
-                backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
-                backgroundSize: "cover",
-                cursor: "pointer",
-              }}
-              onClick={() => setSelectedMedia(media)}
-            >
-              <div className="overlay absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-              <img
-                src={video}
-                alt="play"
-                className="h-10 w-10 opacity-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 transition-opacity duration-200"
-              />
+        {content &&
+          content.map((media) => (
+            <div className="flex flex-col w-52  h-[27rem]">
+              <div
+                key={media.id}
+                className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px]  border-neutral-400"
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
+                  backgroundSize: "cover",
+                  cursor: "pointer",
+                }}
+                onClick={() => setSelectedMedia(media)}
+              >
+                <div className="overlay absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                <img
+                  src={video}
+                  alt="play"
+                  className="h-10 w-10 opacity-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 transition-opacity duration-200"
+                />
+              </div>
+              <h1 className="text-white text-center mt-5 mb-10">
+                {media.title ? media.title : media.name}
+              </h1>
             </div>
-            <h1 className="text-white text-center mt-5 mb-10">
-              {media.title ? media.title : media.name}
-            </h1>
-          </div>
-        ))}
+          ))}
       </div>
       <Modal
         isOpen={selectedMedia !== null}

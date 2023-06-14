@@ -1,3 +1,5 @@
+import { siteName } from "../../config";
+
 const Footer: React.FC = () => {
   const scrollTop = () => {
     const scrolled = window.scrollY;
@@ -22,7 +24,7 @@ const Footer: React.FC = () => {
     >
       <h1 className="text-white text-4xl hover:text-red-700 transition-colors duration-300">
         <a onClick={scrollTop} className="cursor-pointer ">
-          Movieflix
+          {siteName}
         </a>
       </h1>
       <ul className="flex flex-wrap w-1/3 h-30 gap-5 mt-10 justify-center items-center">

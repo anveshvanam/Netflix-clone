@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { siteName } from "../../config";
 
 export function Navbar() {
   const [navbar, setNavbar] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export function Navbar() {
         className="text-white text-3xl font-bold cursor-pointer"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        MovieFlix
+        {siteName}
       </h1>
       <ul className="flex gap-10 text-white text-lg">
         <li>

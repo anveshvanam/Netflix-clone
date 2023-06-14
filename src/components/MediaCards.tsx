@@ -37,23 +37,25 @@ export function MediaCards(props: MediaCardsProps) {
 
   useEffect(() => {
     const fetchTrailer = async () => {
-      const trailers = await fetch(
-        `https://api.themoviedb.org/3/${mediaType}/${selectedMedia.id}/videos?api_key=${apiKey}&language=en-US`
-      );
-      const data = await trailers.json();
-      console.log(data);
-      if (data.results) {
-        const trailer = data.results.filter(
-          (item: any) => item.type === "Trailer"
+      if (selectedMedia) {
+        const trailers = await fetch(
+          `https://api.themoviedb.org/3/${mediaType}/${selectedMedia.id}/videos?api_key=${apiKey}&language=en-US`
         );
-        if (trailer.length > 0) {
-          console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
-          setTrailerKey(trailer[0].key);
+        const data = await trailers.json();
+        console.log(data);
+        if (data.results) {
+          const trailer = data.results.filter(
+            (item: any) => item.type === "Trailer"
+          );
+          if (trailer.length > 0) {
+            console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
+            setTrailerKey(trailer[0].key);
+          } else {
+            console.log("No trailer found.");
+          }
         } else {
-          console.log("No trailer found.");
+          console.log("error");
         }
-      } else {
-        console.log("error");
       }
     };
     fetchTrailer();

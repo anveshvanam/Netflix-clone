@@ -5,8 +5,11 @@ import GenreMediaCards from "./components/GenreMediaCards";
 
 type Media = {
   id: number;
-  title: string;
   poster_path: string;
+  backdrop_path: string;
+  title?: string;
+  name?: string;
+  overview: string;
 };
 
 type SearchResponse = {
@@ -22,9 +25,13 @@ export function Search(): JSX.Element {
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const handleSearch = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e?:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     if (searchText.trim() === "") {
       return;
     }
@@ -48,13 +55,10 @@ export function Search(): JSX.Element {
     });
   };
 
-  useEffect(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      handleSearch(event);
-      console.log("triggered");
-    },
-    [mediaType, pageNo]
-  );
+  useEffect(() => {
+    handleSearch();
+    console.log("triggered");
+  }, [mediaType, pageNo]);
 
   const handlePrevPage = () => {
     setPageNo((prevPageNo) => prevPageNo - 1);

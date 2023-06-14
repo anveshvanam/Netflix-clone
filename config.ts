@@ -19,3 +19,5 @@ export const tvshow = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey
 export const movieGenre = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
 
 export const tvGenre = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=en-US`;
+
+export const siteName = "Cinemora";
