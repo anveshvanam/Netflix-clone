@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
-  const [navbar, setNavbar] = useState(false);
+  const [navbar, setNavbar] = useState<boolean>(false);
 
   const handleScroll = () => {
     const scrollHeight = window.scrollY;

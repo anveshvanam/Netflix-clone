@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-const Footer = () => {
+const Footer: React.FC = () => {
   const scrollTop = () => {
     const scrolled = window.scrollY;
     if (scrolled >= 0) {

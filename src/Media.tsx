@@ -1,16 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { movieGenre, apiKey, tvGenre } from "../config";
 import cancel from "./assets/cancel.png";
 import GenreMediaCards from "./components/GenreMediaCards";
 
-export function Media({ mediaType }) {
-  const [mediaGenres, setMediaGenres] = useState([]);
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [fetchedMedia, setFetchedMedia] = useState([]);
-  const [pageNo, setPageNo] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+interface MediaProps {
+  mediaType: "movie" | "tv";
+}
 
-  const handleSelectedGenres = (id) => {
+interface Genre {
+  id: number;
+  name: string;
+}
+
+export function Media({ mediaType }: MediaProps): JSX.Element {
+  const [mediaGenres, setMediaGenres] = useState<Genre[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<Array<number>>([]);
+  const [fetchedMedia, setFetchedMedia] = useState<any[]>([]);
+  const [pageNo, setPageNo] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const handleSelectedGenres = (id: number) => {
     const alreadySelected = selectedGenres.includes(id);
     if (alreadySelected) {
       setSelectedGenres(selectedGenres.filter((genreId) => genreId !== id));
@@ -120,11 +129,7 @@ export function Media({ mediaType }) {
         </ul>
         <div className="flex flex-wrap gap-10 mt-10">
           {fetchedMedia.length > 0 ? (
-            <GenreMediaCards
-              type={mediaType}
-              media={fetchedMedia}
-              mediaType={mediaType}
-            />
+            <GenreMediaCards media={fetchedMedia} mediaType={mediaType} />
           ) : (
             <p className="text-white">No {mediaType} found.</p>
           )}

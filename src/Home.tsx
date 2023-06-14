@@ -8,10 +8,15 @@ import {
   topRatedTv,
 } from "../config";
 
-export function Home() {
-  const [randomMovie, setRandomMovie] = useState(null);
+interface Movie {
+  title: string;
+  id: number;
+}
 
-  const [loading, setLoading] = useState(true);
+export function Home() {
+  const [randomMovie, setRandomMovie] = useState<Movie | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchTrendingMovies = async () => {
     const url =
@@ -41,7 +46,7 @@ export function Home() {
     fetchTrendingMovies();
   }, []);
 
-  const getRandomMovie = (movies) => {
+  const getRandomMovie = (movies: Movie[]) => {
     const randomIndex = Math.floor(Math.random() * movies.length);
     setRandomMovie(movies[randomIndex]);
   };

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { apiKey } from "../../config.ts";
 
 const RandomMovie = ({ movie }) => {
-  const [showTrailer, setShowTrailer] = useState(false);
+  const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState(null);
 
   const handleCloseModal = () => {

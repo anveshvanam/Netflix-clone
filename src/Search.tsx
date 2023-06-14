@@ -3,14 +3,27 @@ import { apiKey } from "../config";
 import search from "./assets/search.png";
 import GenreMediaCards from "./components/GenreMediaCards";
 
-export function Search() {
-  const [searchText, setSearchText] = useState("");
-  const [mediaType, setMediaType] = useState("movie");
-  const [fetchedMedia, setFetchedMedia] = useState([]);
-  const [pageNo, setPageNo] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+type Media = {
+  id: number;
+  title: string;
+  poster_path: string;
+};
+
+type SearchResponse = {
+  results: Media[];
+  total_pages: number;
+};
+
+export function Search(): JSX.Element {
+  const [searchText, setSearchText] = useState<string>("");
+  const [mediaType, setMediaType] = useState<"movie" | "tv">("movie");
+  const [fetchedMedia, setFetchedMedia] = useState<Media[]>([]);
+  const [pageNo, setPageNo] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const handleSearch = async (e) => {
+    // changing the event argument will break the search function i dont know why
+
     event?.preventDefault();
     if (searchText.trim() === "") {
       return;
@@ -18,7 +31,7 @@ export function Search() {
 
     const url = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&language=en-US&query=${searchText}&page=${pageNo}&include_adult=false`;
     const response = await fetch(url);
-    const data = await response.json();
+    const data: SearchResponse = await response.json();
     console.log(data);
     setFetchedMedia(data.results);
     setTotalPages(data.total_pages);

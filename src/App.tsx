@@ -4,8 +4,9 @@ import { Media } from "./Media";
 import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Search } from "./Search";
+import { NotFound } from "./components/NotFound";
 
-function App() {
+function App(): JSX.Element {
   return (
     <>
       <Navbar />
@@ -14,6 +15,7 @@ function App() {
         <Route path="/movies" element={<Media mediaType="movie" />} />
         <Route path="tv" element={<Media mediaType="tv" />} />
         <Route path="/search" element={<Search />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>

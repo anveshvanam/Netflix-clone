@@ -4,11 +4,26 @@ import Modal from "react-modal";
 import ReactPlayer from "react-player";
 import { apiKey } from "../../config";
 
-export function MediaCards(props) {
+export interface Media {
+  id: number;
+  poster_path: string;
+  backdrop_path: string;
+  title?: string;
+  name?: string;
+  overview: string;
+}
+
+export interface MediaCardsProps {
+  title: string;
+  media: Media[];
+  mediaType: string;
+}
+
+export function GenreMediaCards(props: MediaCardsProps) {
   const { title, media, mediaType } = props;
-  const [content, setContent] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showTrailer, setShowTrailer] = useState(false);
+  const [content, setContent] = useState<Media[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
 
@@ -155,4 +170,4 @@ export function MediaCards(props) {
   // ...
 }
 
-export default MediaCards;
+export default GenreMediaCards;
