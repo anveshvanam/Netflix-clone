@@ -21,7 +21,9 @@ export function Search(): JSX.Element {
   const [pageNo, setPageNo] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (searchText.trim() === "") {
       return;
@@ -46,10 +48,13 @@ export function Search(): JSX.Element {
     });
   };
 
-  useEffect(() => {
-    handleSearch(event);
-    console.log("triggered");
-  }, [mediaType, pageNo]);
+  useEffect(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      handleSearch(event);
+      console.log("triggered");
+    },
+    [mediaType, pageNo]
+  );
 
   const handlePrevPage = () => {
     setPageNo((prevPageNo) => prevPageNo - 1);
@@ -83,7 +88,7 @@ export function Search(): JSX.Element {
           className={`${
             mediaType === "movie" ? "border-b-blue-700" : "border-b-transparent"
           } w-52 h-20 text-white border-b-2 transition-all duration-300 p-2`}
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             setMediaType("movie");
             if (searchText.trim() !== "") {
               handleSearch(e);
@@ -96,7 +101,7 @@ export function Search(): JSX.Element {
           className={`${
             mediaType === "tv" ? "border-b-blue-700" : "border-b-transparent "
           } text-white w-52 h-20 border-b-2 p-2 transition-all duration-300`}
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             setMediaType("tv");
             if (searchText.trim() !== "") {
               handleSearch(e);

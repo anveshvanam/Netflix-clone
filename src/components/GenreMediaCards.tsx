@@ -15,7 +15,7 @@ export interface Media {
 
 export interface MediaCardsProps {
   title?: string;
-  media: Media[];
+  media?: Media[];
   mediaType: string;
   fetchUrl?: string;
 }
