@@ -21,20 +21,22 @@ export function Search(): JSX.Element {
   const [pageNo, setPageNo] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const handleSearch = async (e) => {
-    // changing the event argument will break the search function i dont know why
-
-    event?.preventDefault();
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (searchText.trim() === "") {
       return;
     }
 
     const url = `https://api.themoviedb.org/3/search/${mediaType}?api_key=${apiKey}&language=en-US&query=${searchText}&page=${pageNo}&include_adult=false`;
-    const response = await fetch(url);
-    const data: SearchResponse = await response.json();
-    console.log(data);
-    setFetchedMedia(data.results);
-    setTotalPages(data.total_pages);
+    try {
+      const response = await fetch(url);
+      const data: SearchResponse = await response.json();
+      console.log(data);
+      setFetchedMedia(data.results);
+      setTotalPages(data.total_pages);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
 
   const scrollToTop = () => {
@@ -45,8 +47,8 @@ export function Search(): JSX.Element {
   };
 
   useEffect(() => {
-    handleSearch();
-    console.log("triggered ");
+    handleSearch(event);
+    console.log("triggered");
   }, [mediaType, pageNo]);
 
   const handlePrevPage = () => {
@@ -66,6 +68,7 @@ export function Search(): JSX.Element {
           type="text"
           placeholder="Search"
           className="bg-gray-800 text-white p-2 rounded-l h-12 w-96 focus:border-blue-600 focus:border-2  outline-none"
+          value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
         <button
@@ -83,7 +86,7 @@ export function Search(): JSX.Element {
           onClick={(e) => {
             setMediaType("movie");
             if (searchText.trim() !== "") {
-              handleSearch();
+              handleSearch(e);
             }
           }}
         >
@@ -96,7 +99,7 @@ export function Search(): JSX.Element {
           onClick={(e) => {
             setMediaType("tv");
             if (searchText.trim() !== "") {
-              handleSearch();
+              handleSearch(e);
             }
           }}
         >

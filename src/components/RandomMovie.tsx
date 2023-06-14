@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useState, useEffect } from "react";
 import { apiKey } from "../../config.ts";
 
-const RandomMovie = ({ movie }) => {
+const RandomMovie = ({ movie }: any) => {
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState(null);
 
@@ -19,7 +19,9 @@ const RandomMovie = ({ movie }) => {
       const data = await trailers.json();
       console.log(data);
       if (data.results) {
-        const trailer = data.results.filter((item) => item.type === "Trailer");
+        const trailer = data.results.filter(
+          (item: any) => item.type === "Trailer"
+        );
         if (trailer.length > 0) {
           console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
           setTrailerKey(trailer[0].key);

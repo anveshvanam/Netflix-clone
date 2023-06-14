@@ -3,23 +3,22 @@ import video from "../assets/video.png";
 import Modal from "react-modal";
 import ReactPlayer from "react-player";
 import { apiKey } from "../../config";
+import { Media, MediaCardsProps } from "./GenreMediaCards";
 
-export function MediaCards(props) {
+export function MediaCards(props: MediaCardsProps) {
   const { title, fetchUrl, mediaType } = props;
-  const [content, setContent] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showTrailer, setShowTrailer] = useState(false);
-  const [trailerKey, setTrailerKey] = useState([]);
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [content, setContent] = useState<Media[]>([]);
+  const [showTrailer, setShowTrailer] = useState<boolean>(false);
+  const [trailerKey, setTrailerKey] = useState<string>("");
+  const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
   const fetchContent = async () => {
-    const url = fetchUrl;
+    const url: string = fetchUrl || "";
 
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);
     if (data.results) {
-      setLoading(false);
       console.log("data.results", data.results);
       setContent(data.results);
     } else {
@@ -44,7 +43,9 @@ export function MediaCards(props) {
       const data = await trailers.json();
       console.log(data);
       if (data.results) {
-        const trailer = data.results.filter((item) => item.type === "Trailer");
+        const trailer = data.results.filter(
+          (item: any) => item.type === "Trailer"
+        );
         if (trailer.length > 0) {
           console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
           setTrailerKey(trailer[0].key);

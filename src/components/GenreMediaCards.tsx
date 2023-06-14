@@ -14,18 +14,18 @@ export interface Media {
 }
 
 export interface MediaCardsProps {
-  title: string;
+  title?: string;
   media: Media[];
   mediaType: string;
+  fetchUrl?: string;
 }
 
 export function GenreMediaCards(props: MediaCardsProps) {
   const { title, media, mediaType } = props;
   const [content, setContent] = useState<Media[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState([]);
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
   const handleCloseModal = () => {
     setSelectedMedia(null);
@@ -44,7 +44,9 @@ export function GenreMediaCards(props: MediaCardsProps) {
       const data = await trailers.json();
       console.log(data);
       if (data.results) {
-        const trailer = data.results.filter((item) => item.type === "Trailer");
+        const trailer = data.results.filter(
+          (item: any) => item.type === "Trailer"
+        );
         if (trailer.length > 0) {
           console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
           setTrailerKey(trailer[0].key);
