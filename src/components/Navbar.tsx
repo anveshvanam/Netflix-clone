@@ -23,17 +23,17 @@ export function Navbar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-20 flex items-center justify-around transition-all duration-500 z-10 ${
+      className={`fixed top-0 left-0 w-full h-14 lg:h-20 flex items-center lg:justify-around transition-all duration-500 z-10 ${
         navbar ? "bg-black" : "bg-transparent"
       }`}
     >
       <h1
-        className="text-white text-3xl font-bold cursor-pointer"
+        className="text-white text-xl font-semibold m-4 lg:m-0 lg:text-3xl lg:font-bold cursor-pointer"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         {siteName}
       </h1>
-      <ul className="flex gap-10 text-white text-lg">
+      <ul className="hidden lg:flex gap-10 text-white text-lg">
         <li>
           <Link to="/" className="group transition duration-300">
             Home

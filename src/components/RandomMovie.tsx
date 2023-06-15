@@ -39,18 +39,20 @@ const RandomMovie = ({ movie }: any) => {
 
   return showTrailer == false ? (
     <div
-      className={`w-full h-[95vh] relative flex items-end justify-center bg-no-repeat bg-center bg-cover bg-opacity-30 `}
+      className={`w-full h-[75vh] lg:h-[95vh] relative flex items-end justify-center bg-no-repeat bg-center bg-cover bg-opacity-30 `}
       style={{
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,1)), ${backgroundImage}`,
       }}
     >
-      <div className="flex justify-center items-center  mb-10 w-2/3">
-        <div className="flex justify-center items-center w-3/4 gap-8">
-          <div className="flex flex-col gap-10">
-            <h1 className="text-white text-4xl font-bold">{movie.title}</h1>
-            <p className="text-white text-md">{movie.overview}</p>
+      <div className="flex justify-center items-center  mb-10 w-[90%] lg:w-2/3">
+        <div className="flex justify-center items-center w-full lg:w-3/4 gap-2 lg:gap-8">
+          <div className="flex flex-col gap-4 lg:gap-10">
+            <h1 className="text-white text-2xl lg:text-4xl font-bold">
+              {movie.title}
+            </h1>
+            <p className="text-white text-sm lg:text-base">{movie.overview}</p>
             <a
-              className="bg-transparent border-[1px] border-zinc-400 text-white px-5 py-3 rounded-3xl w-40 hover:bg-red-700 transition-colors duration-100 cursor-pointer"
+              className="bg-transparent border-[1px] border-zinc-400 text-white lg:px-5 px-3 py-2 text-base lg:py-3 rounded-3xl w-36 lg:w-40 hover:bg-red-700 transition-colors duration-100 cursor-pointer"
               onClick={() => setShowTrailer(true)}
             >
               WATCH TRAILER
@@ -59,7 +61,7 @@ const RandomMovie = ({ movie }: any) => {
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt="poster"
-            className="h-96 w-64 rounded-xl"
+            className="h-96 w-64 rounded-xl hidden lg:block"
           />
         </div>
       </div>
@@ -83,10 +85,10 @@ const RandomMovie = ({ movie }: any) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          height: "70%",
-          width: "75%",
+          height: "100%",
+          width: "100%",
           border: "0",
-          background: "#fff",
+          background: "#000",
           overflow: "auto",
           WebkitOverflowScrolling: "touch",
           borderRadius: "4px",
@@ -96,12 +98,20 @@ const RandomMovie = ({ movie }: any) => {
         },
       }}
     >
-      <ReactPlayer
-        url={`https://www.youtube.com/watch?v=${trailerKey}`}
-        playing
-        width="100%"
-        height="100%"
-      />
+      <div className="w-[100%] h-screen lg:w-[70%] lg:h-96 flex  flex-col gap-10 justify-center items-center">
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${trailerKey}`}
+          playing
+          width="100%"
+          height="100%"
+        />
+        <button
+          className="bg-red-700 text-white rounded-3xl p-2 w-7 text-xs h-7  flex justify-center items-center"
+          onClick={handleCloseModal}
+        >
+          X
+        </button>
+      </div>
     </Modal>
   );
 };

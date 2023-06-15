@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Search } from "./Search";
 import { NotFound } from "./components/NotFound";
+import { MobileNavbar } from "./components/MobileNavbar";
 
 function App(): JSX.Element {
   return (
@@ -18,6 +19,7 @@ function App(): JSX.Element {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+      <MobileNavbar />
     </>
   );
 }
