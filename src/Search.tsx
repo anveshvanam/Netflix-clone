@@ -76,7 +76,7 @@ export function Search(): JSX.Element {
         <input
           type="text"
           placeholder="Search"
-          className="bg-gray-800 text-white p-2 rounded-l h-12 w-96 focus:border-blue-600 focus:border-2  outline-none"
+          className="bg-gray-800 text-white p-2 rounded-l h-12 w-full lg:w-96 focus:border-blue-600 focus:border-2  outline-none"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -87,11 +87,11 @@ export function Search(): JSX.Element {
           <img src={search} alt="search" className="w-7 h-7" />
         </button>
       </form>
-      <div className="flex mt-10">
+      <div className="flex mt-4 lg:mt-10">
         <button
           className={`${
             mediaType === "movie" ? "border-b-blue-700" : "border-b-transparent"
-          } w-52 h-20 text-white border-b-2 transition-all duration-300 p-2`}
+          } w-32 lg:w-52 h-20 text-white border-b-2 transition-all duration-300 p-2`}
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             setMediaType("movie");
             if (searchText.trim() !== "") {
@@ -104,7 +104,7 @@ export function Search(): JSX.Element {
         <button
           className={`${
             mediaType === "tv" ? "border-b-blue-700" : "border-b-transparent "
-          } text-white w-52 h-20 border-b-2 p-2 transition-all duration-300`}
+          } text-white w-32 lg:w-52 h-20 border-b-2 p-2 transition-all duration-300`}
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             setMediaType("tv");
             if (searchText.trim() !== "") {

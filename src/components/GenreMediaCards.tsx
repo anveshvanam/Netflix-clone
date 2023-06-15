@@ -67,13 +67,13 @@ export function GenreMediaCards(props: MediaCardsProps) {
       <div className="flex justify-start">
         <h1 className="text-white text-2xl font-bold mb-8">{title}</h1>
       </div>
-      <div className="flex w-[68%] px-3 items-start justify-center  gap-10  flex-wrap mb-7">
+      <div className="flex w-full lg:w-[68%] lg:px-3 items-start justify-around  gap-8 lg:gap-10  flex-wrap mb-7">
         {content &&
           content.map((media) => (
-            <div className="flex flex-col w-52  h-[27rem]">
+            <div className="flex flex-col w-32 h-64 lg:w-52  lg:h-[27rem]">
               <div
                 key={media.id}
-                className="h-80 w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px]  border-neutral-400"
+                className="h-52 w-32 lg:h-80 lg:w-52  bg-black text-white flex flex-col items-center justify-center gap-5 flex-shrink-0 rounded-xl relative opacity-100 transition-all duration-500 group border-[1px]  border-neutral-400"
                 style={{
                   backgroundImage: `url(https://image.tmdb.org/t/p/w500${media.poster_path})`,
                   backgroundSize: "cover",
@@ -88,7 +88,7 @@ export function GenreMediaCards(props: MediaCardsProps) {
                   className="h-10 w-10 opacity-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 transition-opacity duration-200"
                 />
               </div>
-              <h1 className="text-white text-center mt-5 mb-10">
+              <h1 className="text-white text-center text-sm lg:text-base mt-2 lg:mt-5 mb-10">
                 {media.title ? media.title : media.name}
               </h1>
             </div>
@@ -112,8 +112,8 @@ export function GenreMediaCards(props: MediaCardsProps) {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            height: "70%",
-            width: "75%",
+            height: "100%",
+            width: "100%",
             border: "0",
             background: "#fff",
             overflow: "auto",
@@ -125,50 +125,62 @@ export function GenreMediaCards(props: MediaCardsProps) {
           },
         }}
       >
-        {selectedMedia &&
-          (showTrailer ? (
-            <div className="w-full h-full bg-black flex justify-center items-center">
-              <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${trailerKey}`}
-                controls
-                width="100%"
-                height="100%"
-              />
-            </div>
-          ) : (
-            <div
-              className="w-full h-full flex justify-center items-center self-center"
-              style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(https://image.tmdb.org/t/p/w500${selectedMedia.backdrop_path})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="flex justify-center items-center w-[60%] gap-8">
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${selectedMedia.poster_path}`}
-                  alt="poster"
-                  className="h-80 w-56 rounded-xl"
+        <div className="w-full h-full bg-black flex flex-col justify-center items-center">
+          {selectedMedia &&
+            (showTrailer ? (
+              <div className="w-full lg:w-[60%] lg:h-[60%] h-full flex flex-col  bg-black  justify-center items-center">
+                <ReactPlayer
+                  url={`https://www.youtube.com/watch?v=${trailerKey}`}
+                  controls
+                  width="100%"
+                  height="100%"
                 />
-                <div className="flex flex-col gap-10">
-                  <h1 className="text-white text-4xl font-bold">
-                    {selectedMedia.title
-                      ? selectedMedia.title
-                      : selectedMedia.name}
-                  </h1>
-                  <p className="text-white text-md">{selectedMedia.overview}</p>
-                  <button
-                    className="bg-transparent border-[1px] border-zinc-400 text-white px-5 py-3 rounded-3xl w-40 hover:bg-red-700 transition-colors duration-100 cursor-pointer"
-                    onClick={() =>
-                      showTrailer ? setShowTrailer(false) : setShowTrailer(true)
-                    }
-                  >
-                    WATCH TRAILER
-                  </button>
+                <button
+                  className="bg-red-900 text-black rounded-3xl p-2 w-7 text-xs h-7  flex justify-center items-center text-center"
+                  onClick={handleCloseModal}
+                >
+                  X
+                </button>
+              </div>
+            ) : (
+              <div
+                className="w-full h-[80%] lg:w-[70%] lg:h-[60%] flex justify-center items-end self-center"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(https://image.tmdb.org/t/p/w500${selectedMedia.backdrop_path})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <div className="flex justify-center items-center w-[90%] lg:w-[60%] gap-8">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${selectedMedia.poster_path}`}
+                    alt="poster"
+                    className="h-80 w-56 rounded-xl hidden lg:block"
+                  />
+                  <div className="flex flex-col gap-10">
+                    <h1 className="text-white text-xl lg:text-4xl font-bold">
+                      {selectedMedia.title
+                        ? selectedMedia.title
+                        : selectedMedia.name}
+                    </h1>
+                    <p className="text-white text-sm lg:text-md">
+                      {selectedMedia.overview}
+                    </p>
+                    <button
+                      className="bg-transparent border-[1px] border-zinc-400 text-white py-2 lg:px-5 lg:py-3 rounded-3xl w-32 text-sm lg:w-40 hover:bg-red-700 transition-colors duration-100 cursor-pointer"
+                      onClick={() =>
+                        showTrailer
+                          ? setShowTrailer(false)
+                          : setShowTrailer(true)
+                      }
+                    >
+                      WATCH TRAILER
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </Modal>
     </div>
   );

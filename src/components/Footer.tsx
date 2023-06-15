@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
     "https://res09.bignox.com/appcenter/en/2020/02/US-en-20200210-popsignuptwoweeks-perspective_alpha_website_large.jpg";
   return (
     <div
-      className="footer h-[70vh] w-full bg-gradient-to-b from-black via-black to-transparent relative flex flex-col justify-center items-center"
+      className="footer h-[50vh] lg:h-[70vh] w-full bg-gradient-to-b from-black via-black to-transparent relative flex flex-col justify-center items-center"
       style={{
         backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url(${footerImg})`,
         backgroundSize: "cover",
@@ -22,12 +22,12 @@ const Footer: React.FC = () => {
         backgroundPosition: "center bottom",
       }}
     >
-      <h1 className="text-white text-4xl hover:text-red-700 transition-colors duration-300">
+      <h1 className="text-white text-3xl lg:text-4xl hover:text-red-700 transition-colors duration-300">
         <a onClick={scrollTop} className="cursor-pointer ">
           {siteName}
         </a>
       </h1>
-      <ul className="flex flex-wrap w-1/3 h-30 gap-5 mt-10 justify-center items-center">
+      <ul className="flex flex-wrap w-full lg:w-1/3 h-30 gap-5 mt-10 justify-center items-center">
         <li className="text-white text-sm hover:text-red-700 transition-colors duration-500 mx-10">
           <a href="https://github.com/anveshvanam">Github</a>
         </li>

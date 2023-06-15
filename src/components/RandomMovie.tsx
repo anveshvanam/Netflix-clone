@@ -22,8 +22,10 @@ const RandomMovie = ({ movie }: any) => {
         const trailer = data.results.filter(
           (item: any) => item.type === "Trailer"
         );
+        console.log("trailer", trailer);
         if (trailer.length > 0) {
           console.log(`https://www.youtube.com/watch?v=${trailer[0].key}`);
+
           setTrailerKey(trailer[0].key);
         } else {
           console.log("No trailer found.");
@@ -51,12 +53,12 @@ const RandomMovie = ({ movie }: any) => {
               {movie.title}
             </h1>
             <p className="text-white text-sm lg:text-base">{movie.overview}</p>
-            <a
+            <button
               className="bg-transparent border-[1px] border-zinc-400 text-white lg:px-5 px-3 py-2 text-base lg:py-3 rounded-3xl w-36 lg:w-40 hover:bg-red-700 transition-colors duration-100 cursor-pointer"
               onClick={() => setShowTrailer(true)}
             >
               WATCH TRAILER
-            </a>
+            </button>
           </div>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -67,52 +69,58 @@ const RandomMovie = ({ movie }: any) => {
       </div>
     </div>
   ) : (
-    <Modal
-      isOpen={showTrailer}
-      onRequestClose={handleCloseModal}
-      contentLabel="Movie Details"
-      style={{
-        overlay: {
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.85)",
-        },
-        content: {
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          height: "100%",
-          width: "100%",
-          border: "0",
-          background: "#000",
-          overflow: "auto",
-          WebkitOverflowScrolling: "touch",
-          borderRadius: "4px",
-          outline: "none",
-          padding: "0px",
-          margin: "0px",
-        },
-      }}
-    >
-      <div className="w-[100%] h-screen lg:w-[70%] lg:h-96 flex  flex-col gap-10 justify-center items-center">
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${trailerKey}`}
-          playing
-          width="100%"
-          height="100%"
-        />
-        <button
-          className="bg-red-700 text-white rounded-3xl p-2 w-7 text-xs h-7  flex justify-center items-center"
-          onClick={handleCloseModal}
-        >
-          X
-        </button>
-      </div>
-    </Modal>
+    <div className="min-h-screen h-full flex w-full justify-center items-center">
+      <Modal
+        isOpen={showTrailer}
+        onRequestClose={handleCloseModal}
+        contentLabel="Movie Details"
+        style={{
+          overlay: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+          },
+          content: {
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            height: "100%",
+            width: "100%",
+            border: "0",
+            background: "#000",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "4px",
+            outline: "none",
+            padding: "0px",
+            margin: "0px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
+        <div className="w-full lg:w-[50%] h-full flex flex-col gap-10 justify-center items-center">
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${trailerKey}`}
+            playing
+            width="100%"
+            height="50%"
+            controls
+          />
+          <button
+            className="bg-red-700 text-white rounded-3xl p-2 w-7 text-xs h-7  flex justify-center items-center text-center font-bold"
+            onClick={handleCloseModal}
+          >
+            X
+          </button>
+        </div>
+      </Modal>
+    </div>
   );
 };
 

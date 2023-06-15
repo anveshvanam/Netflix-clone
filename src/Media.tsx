@@ -97,11 +97,11 @@ export function Media({ mediaType }: MediaProps): JSX.Element {
 
   return (
     <>
-      <div className="bg-black flex flex-col min-h-screen py-20 p-10 w-full">
+      <div className="bg-black flex flex-col min-h-screen py-20 p-3 lg:p-10 w-full">
         <h1 className="text-white text-3xl">
           {mediaType === "movie" ? "Movies" : "TV Shows"}
         </h1>
-        <ul className="flex gap-10 text-black text-lg mt-10 w-full flex-wrap">
+        <ul className="flex gap-2 lg:gap-10 text-black text-lg mt-4 lg:mt-10 w-full flex-wrap">
           {mediaGenres.map((genre) => (
             <li
               key={genre.id}
@@ -131,7 +131,9 @@ export function Media({ mediaType }: MediaProps): JSX.Element {
           {fetchedMedia.length > 0 ? (
             <GenreMediaCards media={fetchedMedia} mediaType={mediaType} />
           ) : (
-            <p className="text-white">No {mediaType} found.</p>
+            <p className="text-white text-center w-full">
+              No {mediaType} found.
+            </p>
           )}
         </div>
         <div className="flex justify-center items-center gap-5 mt-5">
