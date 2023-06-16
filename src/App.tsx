@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import { Search } from "./Search";
 import { NotFound } from "./components/NotFound";
 import { MobileNavbar } from "./components/MobileNavbar";
+import "./App.css";
 
 function App(): JSX.Element {
   return (
